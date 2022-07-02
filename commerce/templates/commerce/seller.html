@@ -1,0 +1,47 @@
+{% extends "commerce/layout.html" %}
+{% load static %}
+
+{% block body %}
+<section id="seller-section">
+  <div class="container">
+    <hr>
+    <h2 class="text-secondary">Add a new seller</h2>
+    <form class="form-inline" method="post" action="{% url 'sellers' %}">
+      {% csrf_token %}
+      <input class="form-control mr-2" type="text" placeholder="name of seller" name="name">
+      <input class="form-control " type="text" placeholder="phone number of seller" name="phone">
+      <button class="btn btn-dark" type="submit">Add Seller</button>
+    </form>
+    <hr>
+    <h2 class="text-secondary">List of Sellers</h2>
+    <table class="table table-striped">
+      <thead class="text-secondary">
+          <tr>
+              <th>#</th>
+              <th>Seller Name</th>
+              <th>Phone Number</th>
+              <th>Delete Seller</th>
+          </tr>
+      </thead>
+      <tbody class="text-secondary">
+        {% for seller in sellers %}
+        <tr>
+          <td>{{ forloop.counter }}</td>
+          <td>{{ seller.name }}</td>
+          <td>{{ seller.phoneNumber }}</td>
+          <td>
+            <a href="{% url 'deleteSeller' id=seller.id %}" 
+            onclick="return confirm('Are you sure you want to delete this seller?')"
+            style="text-decoration:none; color:inherit;"
+            class="text-danger"
+            >
+              <i class="fa fa-trash" aria-hidden="true"></i>
+            </a>
+          </td>
+        </tr>          
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</section>
+{% endblock %}

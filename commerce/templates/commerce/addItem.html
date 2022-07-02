@@ -1,0 +1,35 @@
+{% extends "commerce/layout.html" %}
+{% load static %}
+
+{% block body %}
+<section id="add-item-form-section">
+  <div class="container">
+    <form action="{% url 'addItem' %}" method="POST" enctype="multipart/form-data">
+      {% csrf_token %}
+      <div class="form-group">
+          <input autofocus class="form-control" type="text" name="name" placeholder="Name of item" required>
+      </div>
+      <div class="form-group">
+        <label for="description" class="text-secondary">Item description</label>
+        <textarea class="form-control" rows="3" name="description"></textarea>
+    </div>
+      <div class="form-group">
+          <input class="form-control" type="number" name="price" placeholder="Price of item" required>
+      </div>
+      <div class="form-group">
+        <label for="image" class="text-secondary">Picture of Item</label>
+        <input class="form-control" type="file" name="image" required>
+      </div>
+      <div class="form-group">
+        <select name="seller" class="form-control" required>
+          <option selected value="">Select Seller</option>
+          {% for seller in sellers %}
+            <option value="{{seller.id}}">{{seller.name}}</option>
+          {% endfor %}           
+        </select>
+      </div>
+      <input class="btn btn-primary" type="submit" value="Add Item">
+    </form>
+  </div>
+</section>
+{% endblock %}
